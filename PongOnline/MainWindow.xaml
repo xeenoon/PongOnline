@@ -5,15 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PongOnline"
         mc:Ignorable="d"
-        Title="MainWindow" Height="506.091" Width="690.368">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="281*"/>
-            <ColumnDefinition Width="30*"/>
-        </Grid.ColumnDefinitions>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="49" Margin="15,150,0,0" Stroke="Black" VerticalAlignment="Top" Width="19" RenderTransformOrigin="-1.334,-0.36"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="49" Margin="0,150,15,0" Stroke="Black" VerticalAlignment="Top" Width="19" Grid.Column="2"/>
-
-    </Grid>
+        Title="Pong Online" Height="500" Width="700">
+    <Canvas HorizontalAlignment="Left" Height="468" VerticalAlignment="Top" Width="690" Name="MainCanvas"/>
 </Window>
