@@ -26,15 +26,19 @@ namespace PongOnline
         Timer t = new Timer();
         Bat player1;
         Bat player2;
+
+        Ball ball;
         public PongGameWindow()
         {
             InitializeComponent();
             t.Interval = 2;
-            this.KeyDown += new KeyEventHandler(HandleKeyDown);
-            this.KeyUp   += new KeyEventHandler(HandleKeyUp);
+            this.PreviewKeyDown += new KeyEventHandler(HandleKeyDown);
+            this.PreviewKeyUp   += new KeyEventHandler(HandleKeyUp);
 
             player1 = new Bat(MainCanvas,new Point(50,50), t, MovementType.WASD);
             player2 = new Bat(MainCanvas,new Point(630,50), t, MovementType.ARROWS);
+
+            ball = new Ball(MainCanvas,new Point(300,300), t, new VelocityVector(new Point(300,300), Velocities.Random()), player1, player2);
 
             Singleton = this;
             t.Start();
@@ -42,21 +46,21 @@ namespace PongOnline
         public bool isKeyDown;
         public void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            if (!isKeyDown)
-            {
-                isKeyDown = true;
+         //   if (!isKeyDown)
+         //   {
+         //       isKeyDown = true;
                 player1.HandleKeyDown(e.Key);
                 player2.HandleKeyDown(e.Key);
-            }
+        //    }
         }
         public void HandleKeyUp(object sender, KeyEventArgs e)
         {
-            if (isKeyDown)
-            {
+       //     if (isKeyDown)
+         //   {
                 player1.HandleKeyUp(e.Key);
                 player2.HandleKeyUp(e.Key);
                 isKeyDown = !isKeyDown;
-            }
+           // }
         }
     }
 }
