@@ -21,7 +21,7 @@ namespace PongOnline
             //    Console.Title = "Server";
             ShowText("IP=" + LocalIP());
             ShowText("Setting up server");
-            _serversocket.Bind(new IPEndPoint(IPAddress.Any, 100));
+            _serversocket.Bind(new IPEndPoint(IPAddress.Any, 9999));
             _serversocket.Listen(5); //listen 1
             _serversocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
             ShowText("Setup complete");
@@ -43,7 +43,24 @@ namespace PongOnline
                 Array.Copy(_buffer, dataBuf, recieved);
 
                 string texts = Encoding.ASCII.GetString(dataBuf);
-                SendToAll(dataBuf);
+
+                var player = PongGameWindow.player1; //TODO: create a dictionary of sockets, each connected to a different Bat
+
+                //Databuf can ONLY have a length of 1
+                //This will contain 1 byte, which signifies what movement type this is
+                switch (dataBuf[0])
+                {
+                    case 1: //UP key has been pressed
+                        player.direction = Direction.UP;
+                        break;
+                    case 2: //DOWN key has been pressed
+                        player.direction = Direction.DOWN;
+                        break;
+                    case 3: //Key has been RELEASED
+                        player.direction = Direction.NONE;
+                        break;
+                }
+
                 socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(RecieveCallback), socket);
             }
             catch

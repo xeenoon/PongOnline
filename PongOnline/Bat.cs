@@ -16,7 +16,7 @@ namespace PongOnline
     {
         WASD,
         ARROWS,
-        PORT
+        REMOTE
     }
     public enum Direction
     {
@@ -26,8 +26,8 @@ namespace PongOnline
     }
     public class Bat
     {
-        public const int WIDTH = 2;
-        public const int HEIGHT = 30;
+        public const int WIDTH = 10;
+        public const int HEIGHT = 50;
 
         public static readonly Brush BRUSH = Brushes.Green;
         public Rectangle graphics;
@@ -35,7 +35,7 @@ namespace PongOnline
 
         Canvas canvas;
         MovementType movementType;
-        Direction direction = Direction.NONE;
+        public Direction direction = Direction.NONE;
 
         Key up;
         Key down;
@@ -69,23 +69,10 @@ namespace PongOnline
                     up = Key.Up;
                     down = Key.Down;
                     break;
-                case MovementType.PORT:
+                case MovementType.REMOTE:
                     break;
             }
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
-        }
-
-        public void HandleKeyDown(Key key)
-        {
-            if (key == up)
-            {
-                direction = Direction.UP;
-
-            }
-            else if (key == down)
-            {
-                direction = Direction.DOWN;
-            }
         }
 
         // Given three collinear points p, q, r, the function checks if
@@ -180,27 +167,31 @@ namespace PongOnline
 
             return false;
         }
-
-        public void HandleKeyUp(Key key) //Consistency to have both methods accept a key
-        {
-            direction = Direction.NONE;
-        }
         public void Tick(object sender, ElapsedEventArgs e)
         {
             switch (direction)
             {
                 case Direction.UP:
-                    location.Y-=3;
+                    location.Y-=5;
                     ModifyLocation(location.Y);
+                    SendNewMovement(location.Y);
                     break;
                 case Direction.DOWN:
-                    location.Y+=3;
+                    location.Y+=5;
                     ModifyLocation(location.Y);
+                    SendNewMovement(location.Y);
                     break;
                 case Direction.NONE:
                     break;
             }
         }
+
+        private void SendNewMovement(double y)
+        {
+            string tosend = string.Format("1:{0}", (int)y);
+            Networking.SendToAll(Encoding.ASCII.GetBytes(tosend));
+        }
+
         public void ModifyLocation(double ypos)
         {
             if (ypos <= 0)

@@ -13,8 +13,8 @@ namespace PongOnline
 {
     public class Ball
     {
-        public const int WIDTH = 10;
-        public const int HEIGHT = 10;
+        public const int WIDTH = 20;
+        public const int HEIGHT = 20;
 
         public static readonly Brush BRUSH = Brushes.Red;
         public Point location;
@@ -162,10 +162,10 @@ namespace PongOnline
     }
     public class Velocities
     {
-        public static readonly Velocity TopRight = new Velocity(1.5f, 1.5f);
-        public static readonly Velocity BottomRight = new Velocity(1.5f, -1.5f);
-        public static readonly Velocity TopLeft = new Velocity(-1.5f, 1.5f);
-        public static readonly Velocity BottomLeft = new Velocity(-1.5f, -1.5f);
+        public static readonly Velocity TopRight = new Velocity(4f, 3f);
+        public static readonly Velocity BottomRight = new Velocity(4f, -3f);
+        public static readonly Velocity TopLeft = new Velocity(-4f, 3f);
+        public static readonly Velocity BottomLeft = new Velocity(-4f, -3f);
 
         static Random r = new Random();
         public static Velocity Random()
